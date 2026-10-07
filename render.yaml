@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: paboya-kurir
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: paboya-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_KEY
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: RATE_PER_KM
+        value: "3500"
+      - key: JASTIP_PER_POINT
+        value: "2000"
+      - key: ADMIN_WHATSAPP
+        value: "6282190885988"
+      - key: GOOGLE_MAPS_API_KEY
+        sync: false
+databases:
+  - name: paboya-db
+    plan: free
+    databaseName: paboya
+    user: paboya
